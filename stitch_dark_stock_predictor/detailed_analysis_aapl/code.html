@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PREDICT | Market Analysis AAPL</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            backdrop-filter: blur(20px);
+            background: rgba(22, 26, 30, 0.8);
+            border: 1px solid rgba(43, 47, 54, 1);
+        }
+        .ticker-glow-up { border-top: 1px solid #52ffac; box-shadow: 0 -4px 12px -4px rgba(82, 255, 172, 0.3); }
+        .ticker-glow-down { border-top: 1px solid #ff544e; box-shadow: 0 -4px 12px -4px rgba(255, 84, 78, 0.3); }
+        body { background-color: #0b0e11; color: #e1e2e7; }
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: #0b0e11; }
+        ::-webkit-scrollbar-thumb { background: #323538; border-radius: 2px; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed": "#52ffac",
+                        "surface-container-highest": "#323538",
+                        "primary-fixed": "#dce1ff",
+                        "on-tertiary-fixed-variant": "#930010",
+                        "on-secondary-fixed-variant": "#005231",
+                        "surface-container-low": "#191c1f",
+                        "on-tertiary-fixed": "#410003",
+                        "tertiary": "#ffb3ac",
+                        "on-secondary-container": "#007146",
+                        "inverse-on-surface": "#2e3134",
+                        "on-primary-container": "#002172",
+                        "on-surface-variant": "#c3c5d8",
+                        "on-primary-fixed": "#001551",
+                        "on-secondary": "#003920",
+                        "on-tertiary-container": "#5c0006",
+                        "on-primary": "#002681",
+                        "background": "#111417",
+                        "surface": "#111417",
+                        "surface-container-high": "#272a2e",
+                        "on-error-container": "#ffdad6",
+                        "outline-variant": "#434655",
+                        "tertiary-fixed-dim": "#ffb3ac",
+                        "on-background": "#e1e2e7",
+                        "on-tertiary": "#680008",
+                        "on-surface": "#e1e2e7",
+                        "surface-bright": "#37393d",
+                        "tertiary-container": "#ff544e",
+                        "on-primary-fixed-variant": "#0039b5",
+                        "primary-container": "#6989ff",
+                        "primary-fixed-dim": "#b7c4ff",
+                        "secondary-container": "#00ffa3",
+                        "on-secondary-fixed": "#002111",
+                        "secondary": "#f5fff5",
+                        "primary": "#b7c4ff",
+                        "error-container": "#93000a",
+                        "surface-dim": "#111417",
+                        "inverse-primary": "#134ee4",
+                        "surface-tint": "#b7c4ff",
+                        "secondary-fixed-dim": "#00e290",
+                        "surface-container-lowest": "#0b0e11",
+                        "on-error": "#690005",
+                        "surface-container": "#1d2023",
+                        "inverse-surface": "#e1e2e7",
+                        "surface-variant": "#323538",
+                        "error": "#ffb4ab",
+                        "tertiary-fixed": "#ffdad6",
+                        "outline": "#8d90a1"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "xl": "64px",
+                        "xs": "4px",
+                        "sm": "12px",
+                        "gutter": "16px",
+                        "md": "24px",
+                        "base": "8px",
+                        "lg": "40px",
+                        "margin": "24px"
+                    },
+                    "fontFamily": {
+                        "body-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "data-label": ["JetBrains Mono"],
+                        "data-display": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "data-label": ["12px", {"lineHeight": "1", "fontWeight": "400"}],
+                        "data-display": ["18px", {"lineHeight": "1", "letterSpacing": "-0.01em", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="font-body-sm text-on-surface selection:bg-primary/30">
+<!-- TopNavBar -->
+<header class="bg-surface/80 dark:bg-surface/80 backdrop-blur-xl border-b border-outline-variant/30 flex justify-between items-center h-16 px-gutter w-full fixed top-0 z-50">
+<div class="flex items-center gap-md">
+<span class="font-headline-md text-headline-md font-bold tracking-tighter text-primary dark:text-primary">PREDICT</span>
+<nav class="hidden md:flex gap-gutter">
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" href="#">Dashboard</a>
+<a class="font-body-sm text-body-sm text-primary border-b-2 border-primary pb-1" href="#">Markets</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" href="#">Portfolio</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" href="#">Analysis</a>
+</nav>
+</div>
+<div class="flex items-center gap-sm">
+<button class="p-xs hover:bg-primary/10 transition-all rounded-lg active:opacity-80 active:scale-95">
+<span class="material-symbols-outlined text-primary">account_balance_wallet</span>
+</button>
+<button class="p-xs hover:bg-primary/10 transition-all rounded-lg active:opacity-80 active:scale-95">
+<span class="material-symbols-outlined text-primary">notifications_active</span>
+</button>
+<button class="p-xs hover:bg-primary/10 transition-all rounded-lg active:opacity-80 active:scale-95">
+<span class="material-symbols-outlined text-primary">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline ml-xs">
+<img alt="User Analyst Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a financial analyst in a modern dark-themed studio. Soft atmospheric blue rim lighting highlights their features against a dark, tech-focused background. The overall aesthetic is sleek and corporate, with a high-fidelity photographic style that matches a premium fintech dashboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRrU9jWWBkotHaiIFm8HomWTS4AkNlbuf14ItQSO79xCZwfgUFGDH4MHvbjLhgVQhRn5N2x98uZGTP4Id8ouPw755_SjKx7IAjL_3X2ueXfGuDQtXiq1qiWa0WAkDs6g4qhmS_uMNI1wQQmO8YESV69KVA-zorINuI3eZyur8wRZLvtwhykhs3QDSNHoVujrfE3oRO6jaVzxfAomiGfsN9ANUACKWyJgx2oITQUJeAOENZTPuzviTQA8hfifPctutj41i3Dk673mQ"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar (Desktop Only) -->
+<aside class="hidden lg:flex bg-surface-container-lowest border-r border-outline-variant/30 h-screen w-64 fixed left-0 top-0 flex-col py-md pt-20 z-40">
+<div class="px-gutter mb-lg">
+<div class="flex items-center gap-xs mb-xs">
+<span class="w-2 h-2 rounded-full bg-secondary-fixed animate-pulse"></span>
+<span class="font-data-label text-data-label uppercase tracking-widest text-secondary-fixed">MARKET OPEN</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">NYSE: +1.24%</p>
+</div>
+<nav class="flex-1 space-y-xs">
+<a class="flex items-center gap-sm text-on-surface-variant hover:text-on-surface px-4 py-3 hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Overview</span>
+</a>
+<a class="flex items-center gap-sm text-on-surface-variant hover:text-on-surface px-4 py-3 hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">star</span>
+<span>Watchlist</span>
+</a>
+<a class="flex items-center gap-sm bg-primary-container/10 text-primary border-r-4 border-primary px-4 py-3 active:translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined">psychology</span>
+<span>AI Signals</span>
+</a>
+<a class="flex items-center gap-sm text-on-surface-variant hover:text-on-surface px-4 py-3 hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">account_balance</span>
+<span>Portfolio</span>
+</a>
+<a class="flex items-center gap-sm text-on-surface-variant hover:text-on-surface px-4 py-3 hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">description</span>
+<span>Reports</span>
+</a>
+</nav>
+<div class="px-gutter mt-auto pt-md space-y-md">
+<button class="w-full py-sm px-md bg-primary text-on-primary font-bold rounded-lg hover:shadow-[0_0_15px_rgba(183,196,255,0.4)] transition-all">
+                Upgrade to Pro
+            </button>
+<div class="flex justify-between text-on-surface-variant border-t border-outline-variant/20 pt-sm">
+<button class="flex items-center gap-xs hover:text-secondary-fixed transition-colors">
+<span class="material-symbols-outlined text-[18px]">help</span>
+<span class="font-data-label text-data-label uppercase">Support</span>
+</button>
+<button class="flex items-center gap-xs hover:text-secondary-fixed transition-colors">
+<span class="material-symbols-outlined text-[18px]">code</span>
+<span class="font-data-label text-data-label uppercase">API</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="lg:ml-64 pt-20 p-gutter min-h-screen">
+<div class="grid grid-cols-12 gap-gutter max-w-[1600px] mx-auto">
+<!-- Ticker Header -->
+<header class="col-span-12 flex flex-col md:flex-row justify-between items-start md:items-center glass-panel p-md rounded-xl mb-base">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 bg-surface-container-high rounded-full flex items-center justify-center border border-outline-variant">
+<img alt="Apple Inc" class="w-8 h-8 object-contain filter invert opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD98YqSQHwVdG4uO1EEEATTu1vHjn_hy6Zuyqu0ehNJIX7d1jwbf-tmg7Oh_nyH0wFZRavDSfHwjn5Sirl2q3Yg2kuPeYtm2JYW0VDv_QcVeW9fihMAz4i-EGhQmc3F3327bpaRaZl-OTJjbWKIRyyAQaorlH4eQG3Q03lf2gwU7r5F-qTwT1419hMu1hjuxK-itbPQJS2HYHddB7d9PzW3wmOfJg-0sUZBpThUInvclO_ala7fCWiROYcj-xp3OP0ZC-5Hx8mStmM"/>
+</div>
+<div>
+<div class="flex items-center gap-sm">
+<h1 class="font-headline-lg text-headline-lg text-on-surface">AAPL</h1>
+<span class="font-data-label text-data-label px-xs py-1 bg-surface-container-highest rounded border border-outline-variant">NASDAQ</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Apple Inc. • Technology • Consumer Electronics</p>
+</div>
+</div>
+<div class="mt-md md:mt-0 flex items-center gap-lg">
+<div class="text-right">
+<p class="font-data-display text-[28px] text-secondary-fixed">189.43</p>
+<p class="font-data-label text-data-label text-secondary-fixed">+2.45 (1.31%)</p>
+</div>
+<div class="flex gap-sm">
+<button class="bg-surface-container-highest border border-outline-variant px-md py-sm rounded-lg hover:bg-surface-container-high transition-colors font-bold">Sell</button>
+<button class="bg-primary text-on-primary px-md py-sm rounded-lg hover:shadow-[0_0_15px_rgba(183,196,255,0.4)] transition-all font-bold">Buy</button>
+</div>
+</div>
+</header>
+<!-- Main Chart Area -->
+<section class="col-span-12 xl:col-span-8 glass-panel p-md rounded-xl flex flex-col min-h-[500px]">
+<div class="flex justify-between items-center mb-md">
+<div class="flex gap-xs">
+<button class="px-sm py-xs font-data-label text-data-label bg-primary/10 text-primary rounded border border-primary/20">1D</button>
+<button class="px-sm py-xs font-data-label text-data-label hover:bg-surface-container-high rounded transition-colors">1W</button>
+<button class="px-sm py-xs font-data-label text-data-label hover:bg-surface-container-high rounded transition-colors">1M</button>
+<button class="px-sm py-xs font-data-label text-data-label hover:bg-surface-container-high rounded transition-colors">1Y</button>
+<button class="px-sm py-xs font-data-label text-data-label hover:bg-surface-container-high rounded transition-colors">ALL</button>
+</div>
+<div class="flex items-center gap-md">
+<div class="flex items-center gap-xs font-data-label text-data-label text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-secondary-fixed"></span> MA(20) 187.21
+                        </div>
+<div class="flex items-center gap-xs font-data-label text-data-label text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span> MA(50) 184.55
+                        </div>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary">fullscreen</span>
+</div>
+</div>
+<div class="flex-1 relative overflow-hidden group">
+<!-- Candlestick Visualization Simulation -->
+<div class="absolute inset-0 flex items-end justify-between gap-[2px] opacity-80 px-sm pt-md">
+<!-- Mock chart items -->
+<script>
+                            const bars = 40;
+                            for(let i=0; i<bars; i++) {
+                                const h = Math.floor(Math.random() * 60) + 20;
+                                const isUp = Math.random() > 0.4;
+                                const color = isUp ? 'secondary-fixed' : 'tertiary';
+                                document.write(`
+                                    <div class="flex-1 flex flex-col items-center justify-end group/bar cursor-crosshair">
+                                        <div class="w-[1px] h-full bg-${color}/20 absolute"></div>
+                                        <div class="w-full bg-${color} rounded-sm" style="height: ${h}%"></div>
+                                        <div class="hidden group-hover/bar:block absolute top-0 bg-surface-container-highest border border-outline-variant p-xs text-[10px] font-data-label z-10 whitespace-nowrap -translate-y-full">
+                                            O: 188.2 | H: 189.5 | L: 187.9 | C: 189.4
+                                        </div>
+                                    </div>
+                                `);
+                            }
+                        </script>
+</div>
+<!-- Grid Lines -->
+<div class="absolute inset-0 grid grid-rows-5 pointer-events-none">
+<div class="border-b border-outline-variant/10"></div>
+<div class="border-b border-outline-variant/10"></div>
+<div class="border-b border-outline-variant/10"></div>
+<div class="border-b border-outline-variant/10"></div>
+<div class="border-b border-outline-variant/10"></div>
+</div>
+</div>
+</section>
+<!-- Sidebar AI Analysis -->
+<section class="col-span-12 xl:col-span-4 space-y-gutter">
+<!-- AI Sentiment Gauge -->
+<div class="glass-panel p-md rounded-xl ticker-glow-up">
+<h3 class="font-data-label text-data-label uppercase tracking-widest text-on-surface-variant mb-md flex items-center gap-xs">
+<span class="material-symbols-outlined text-secondary-fixed text-[18px]">psychology</span> AI Sentiment Analysis
+                    </h3>
+<div class="relative h-4 w-full bg-surface-container-highest rounded-full overflow-hidden mb-sm flex">
+<div class="h-full bg-secondary-fixed w-[72%]"></div>
+<div class="h-full bg-tertiary w-[28%]"></div>
+</div>
+<div class="flex justify-between font-data-label text-data-label mb-lg">
+<span class="text-secondary-fixed">BULLISH 72%</span>
+<span class="text-tertiary">BEARISH 28%</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant italic">
+                        "Neutral-to-Strong momentum detected in social metadata and institutional order flow. High probability of resistance breakout within 4 hours."
+                    </p>
+</div>
+<!-- Projected Trend -->
+<div class="glass-panel p-md rounded-xl">
+<h3 class="font-data-label text-data-label uppercase tracking-widest text-on-surface-variant mb-md">Projected 24h Trend</h3>
+<div class="flex items-center justify-between">
+<div>
+<p class="font-data-display text-headline-md text-secondary-fixed">+1.85%</p>
+<p class="font-data-label text-data-label text-on-surface-variant">Est. High: 192.10</p>
+</div>
+<div class="w-24 h-12">
+<!-- Mini sparkline -->
+<svg class="w-full h-full stroke-secondary-fixed fill-none stroke-2" viewbox="0 0 100 40">
+<path d="M0 35 Q 25 30, 50 15 T 100 5"></path>
+</svg>
+</div>
+</div>
+</div>
+<!-- Technical Signals List -->
+<div class="glass-panel p-md rounded-xl">
+<h3 class="font-data-label text-data-label uppercase tracking-widest text-on-surface-variant mb-md">Key Indicators</h3>
+<div class="space-y-sm">
+<div class="flex justify-between items-center p-sm bg-surface-container-low rounded">
+<span class="font-data-label text-on-surface">RSI (14)</span>
+<span class="font-data-label text-secondary-fixed">62.4 (Oversold)</span>
+</div>
+<div class="flex justify-between items-center p-sm bg-surface-container-low rounded">
+<span class="font-data-label text-on-surface">MACD</span>
+<span class="font-data-label text-secondary-fixed">1.12 (Strong Buy)</span>
+</div>
+<div class="flex justify-between items-center p-sm bg-surface-container-low rounded">
+<span class="font-data-label text-on-surface">ATR</span>
+<span class="font-data-label text-on-surface-variant">2.84 (Low Vol)</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Bottom Technical Panel -->
+<section class="col-span-12 lg:col-span-8 glass-panel p-md rounded-xl">
+<div class="flex items-center gap-lg mb-md border-b border-outline-variant/30 pb-xs">
+<button class="font-data-label text-data-label uppercase text-primary border-b border-primary pb-xs">Volume / RSI</button>
+<button class="font-data-label text-data-label uppercase text-on-surface-variant hover:text-on-surface pb-xs">Order Book</button>
+<button class="font-data-label text-data-label uppercase text-on-surface-variant hover:text-on-surface pb-xs">Hist. Volatility</button>
+</div>
+<div class="grid grid-cols-2 gap-gutter h-32 items-end">
+<!-- RSI Chart Simulation -->
+<div class="relative h-full border-r border-outline-variant/20 px-sm">
+<div class="absolute top-[30%] w-full border-t border-dashed border-outline-variant/30"></div>
+<div class="absolute bottom-[30%] w-full border-t border-dashed border-outline-variant/30"></div>
+<svg class="w-full h-full stroke-primary fill-none stroke-[1.5]" viewbox="0 0 200 60">
+<path d="M0 45 L 20 40 L 40 42 L 60 30 L 80 25 L 100 28 L 120 15 L 140 18 L 160 22 L 180 12 L 200 15"></path>
+</svg>
+<span class="absolute left-0 top-0 font-data-label text-[8px] text-on-surface-variant uppercase">RSI Oscillation</span>
+</div>
+<!-- Volume Simulation -->
+<div class="flex items-end gap-1 px-sm">
+<script>
+                            for(let i=0; i<20; i++) {
+                                const h = Math.floor(Math.random() * 80) + 10;
+                                document.write(`<div class="flex-1 bg-surface-container-highest min-h-[${h}%] border-t border-primary/40 rounded-t-sm"></div>`);
+                            }
+                        </script>
+</div>
+</div>
+</section>
+<!-- Recent News Feed -->
+<section class="col-span-12 lg:col-span-4 glass-panel p-md rounded-xl">
+<h3 class="font-data-label text-data-label uppercase tracking-widest text-on-surface-variant mb-md flex justify-between">
+                    Market Pulse
+                    <span class="text-secondary-fixed animate-pulse text-[10px]">LIVE UPDATES</span>
+</h3>
+<div class="space-y-md overflow-y-auto max-h-[160px] pr-xs">
+<div class="border-l-2 border-primary pl-md py-xs">
+<span class="font-data-label text-[10px] text-on-surface-variant">2m ago • Reuters</span>
+<p class="font-body-sm text-body-sm leading-tight mt-xs">Apple announces key expansion into regional generative AI hubs in Singapore.</p>
+</div>
+<div class="border-l-2 border-outline-variant pl-md py-xs">
+<span class="font-data-label text-[10px] text-on-surface-variant">15m ago • Bloomberg</span>
+<p class="font-body-sm text-body-sm leading-tight mt-xs">Supply chain report suggests iPhone 16 production ahead of schedule.</p>
+</div>
+<div class="border-l-2 border-outline-variant pl-md py-xs">
+<span class="font-data-label text-[10px] text-on-surface-variant">1h ago • WSJ</span>
+<p class="font-body-sm text-body-sm leading-tight mt-xs">Federal regulators review App Store payment guidelines for compliance.</p>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest border-t border-outline-variant/20 w-full py-lg mt-xl flex flex-col items-center justify-center gap-sm px-margin text-center">
+<span class="font-data-display text-data-display text-primary">PREDICT AI</span>
+<p class="font-data-label text-data-label uppercase tracking-widest text-on-surface-variant">© 2024 Predict AI Financial. Institutional-grade forecasting.</p>
+<div class="flex gap-md flex-wrap justify-center mt-base">
+<a class="font-data-label text-data-label uppercase tracking-widest text-on-surface-variant hover:text-secondary-fixed transition-colors" href="#">Privacy Policy</a>
+<a class="font-data-label text-data-label uppercase tracking-widest text-on-surface-variant hover:text-secondary-fixed transition-colors" href="#">Terms of Service</a>
+<a class="font-data-label text-data-label uppercase tracking-widest text-on-surface-variant hover:text-secondary-fixed transition-colors" href="#">SEC Disclosures</a>
+<a class="font-data-label text-data-label uppercase tracking-widest text-on-surface-variant hover:text-secondary-fixed transition-colors" href="#">Risk Warning</a>
+</div>
+</footer>
+<!-- Interactive micro-interactions -->
+<script>
+        // Simple hover effect for chart bars
+        document.querySelectorAll('.group\\/bar').forEach(bar => {
+            bar.addEventListener('mouseenter', () => {
+                bar.style.filter = 'brightness(1.5) drop-shadow(0 0 5px currentColor)';
+            });
+            bar.addEventListener('mouseleave', () => {
+                bar.style.filter = '';
+            });
+        });
+
+        // Simulating live data update every 5 seconds
+        setInterval(() => {
+            const price = (189.43 + (Math.random() * 0.1 - 0.05)).toFixed(2);
+            const priceElement = document.querySelector('.font-data-display.text-\\[28px\\]');
+            if(priceElement) {
+                priceElement.innerText = price;
+                priceElement.classList.add('transition-all', 'duration-500');
+                priceElement.style.textShadow = '0 0 10px rgba(82, 255, 172, 0.5)';
+                setTimeout(() => priceElement.style.textShadow = 'none', 500);
+            }
+        }, 5000);
+    </script>
+</body></html>

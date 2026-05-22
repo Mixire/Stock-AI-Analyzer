@@ -1,0 +1,51 @@
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+@layer base {
+  body {
+    @apply bg-background text-on-background font-body-sm;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    background: rgba(22, 26, 30, 0.7);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(43, 47, 54, 0.5);
+  }
+
+  .ticker-wrap {
+    width: 100%;
+    overflow: hidden;
+    background: #0b0e11;
+    border-bottom: 1px solid rgba(67, 70, 85, 0.3);
+  }
+
+  .ticker-move {
+    display: inline-block;
+    white-space: nowrap;
+    animation: ticker 30s linear infinite;
+  }
+
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .node-bg {
+    background-image: radial-gradient(circle at 2px 2px, rgba(183, 196, 255, 0.05) 1px, transparent 0);
+    background-size: 32px 32px;
+  }
+
+  .card-bullish  { border-top: 1px solid #52ffac; box-shadow: 0 -4px 12px -4px rgba(82,255,172,0.3); }
+  .card-bearish  { border-top: 1px solid #ff544e; box-shadow: 0 -4px 12px -4px rgba(255,84,78,0.3); }
+  .card-neutral  { border-top: 1px solid #b7c4ff; }
+
+  ::-webkit-scrollbar       { width: 4px; height: 4px; }
+  ::-webkit-scrollbar-track { background: #0b0e11; }
+  ::-webkit-scrollbar-thumb { background: #323538; border-radius: 2px; }
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}

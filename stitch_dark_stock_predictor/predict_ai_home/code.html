@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PREDICT AI | Institutional-Grade Forecasting</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed": "#52ffac",
+                        "surface-container-highest": "#323538",
+                        "primary-fixed": "#dce1ff",
+                        "on-tertiary-fixed-variant": "#930010",
+                        "on-secondary-fixed-variant": "#005231",
+                        "surface-container-low": "#191c1f",
+                        "on-tertiary-fixed": "#410003",
+                        "tertiary": "#ffb3ac",
+                        "on-secondary-container": "#007146",
+                        "inverse-on-surface": "#2e3134",
+                        "on-primary-container": "#002172",
+                        "on-surface-variant": "#c3c5d8",
+                        "on-primary-fixed": "#001551",
+                        "on-secondary": "#003920",
+                        "on-tertiary-container": "#5c0006",
+                        "on-primary": "#002681",
+                        "background": "#111417",
+                        "surface": "#111417",
+                        "surface-container-high": "#272a2e",
+                        "on-error-container": "#ffdad6",
+                        "outline-variant": "#434655",
+                        "tertiary-fixed-dim": "#ffb3ac",
+                        "on-background": "#e1e2e7",
+                        "on-tertiary": "#680008",
+                        "on-surface": "#e1e2e7",
+                        "surface-bright": "#37393d",
+                        "tertiary-container": "#ff544e",
+                        "on-primary-fixed-variant": "#0039b5",
+                        "primary-container": "#6989ff",
+                        "primary-fixed-dim": "#b7c4ff",
+                        "secondary-container": "#00ffa3",
+                        "on-secondary-fixed": "#002111",
+                        "secondary": "#f5fff5",
+                        "primary": "#b7c4ff",
+                        "error-container": "#93000a",
+                        "surface-dim": "#111417",
+                        "inverse-primary": "#134ee4",
+                        "surface-tint": "#b7c4ff",
+                        "secondary-fixed-dim": "#00e290",
+                        "surface-container-lowest": "#0b0e11",
+                        "on-error": "#690005",
+                        "surface-container": "#1d2023",
+                        "inverse-surface": "#e1e2e7",
+                        "surface-variant": "#323538",
+                        "error": "#ffb4ab",
+                        "tertiary-fixed": "#ffdad6",
+                        "outline": "#8d90a1"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "xl": "64px",
+                        "xs": "4px",
+                        "sm": "12px",
+                        "gutter": "16px",
+                        "md": "24px",
+                        "base": "8px",
+                        "lg": "40px",
+                        "margin": "24px"
+                    },
+                    "fontFamily": {
+                        "body-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "data-label": ["JetBrains Mono"],
+                        "data-display": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "data-label": ["12px", {"lineHeight": "1", "fontWeight": "400"}],
+                        "data-display": ["18px", {"lineHeight": "1", "letterSpacing": "-0.01em", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(22, 26, 30, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(43, 47, 54, 0.5);
+        }
+        .ticker-wrap {
+            width: 100%;
+            overflow: hidden;
+            background: #0b0e11;
+            border-bottom: 1px solid rgba(67, 70, 85, 0.3);
+        }
+        .ticker-move {
+            display: inline-block;
+            white-space: nowrap;
+            animation: ticker 30s linear infinite;
+        }
+        @keyframes ticker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .node-bg {
+            background-image: radial-gradient(circle at 2px 2px, rgba(183, 196, 255, 0.05) 1px, transparent 0);
+            background-size: 32px 32px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-sm selection:bg-primary-container selection:text-on-primary-container">
+<!-- Ticker Tape -->
+<div class="ticker-wrap h-10 flex items-center">
+<div class="ticker-move flex items-center gap-lg">
+<span class="flex items-center gap-xs font-data-label text-data-label text-on-surface-variant uppercase tracking-widest">
+                BTC/USD <span class="text-secondary-fixed">+2.41%</span>
+</span>
+<span class="flex items-center gap-xs font-data-label text-data-label text-on-surface-variant uppercase tracking-widest">
+                ETH/USD <span class="text-secondary-fixed">+1.85%</span>
+</span>
+<span class="flex items-center gap-xs font-data-label text-data-label text-on-surface-variant uppercase tracking-widest">
+                NVDA <span class="text-tertiary-container">-0.12%</span>
+</span>
+<span class="flex items-center gap-xs font-data-label text-data-label text-on-surface-variant uppercase tracking-widest">
+                AAPL <span class="text-secondary-fixed">+0.44%</span>
+</span>
+<span class="flex items-center gap-xs font-data-label text-data-label text-on-surface-variant uppercase tracking-widest">
+                S&amp;P 500 <span class="text-secondary-fixed">+1.24%</span>
+</span>
+<!-- Duplicated for seamless loop -->
+<span class="flex items-center gap-xs font-data-label text-data-label text-on-surface-variant uppercase tracking-widest">
+                BTC/USD <span class="text-secondary-fixed">+2.41%</span>
+</span>
+<span class="flex items-center gap-xs font-data-label text-data-label text-on-surface-variant uppercase tracking-widest">
+                ETH/USD <span class="text-secondary-fixed">+1.85%</span>
+</span>
+<span class="flex items-center gap-xs font-data-label text-data-label text-on-surface-variant uppercase tracking-widest">
+                NVDA <span class="text-tertiary-container">-0.12%</span>
+</span>
+<span class="flex items-center gap-xs font-data-label text-data-label text-on-surface-variant uppercase tracking-widest">
+                AAPL <span class="text-secondary-fixed">+0.44%</span>
+</span>
+<span class="flex items-center gap-xs font-data-label text-data-label text-on-surface-variant uppercase tracking-widest">
+                S&amp;P 500 <span class="text-secondary-fixed">+1.24%</span>
+</span>
+</div>
+</div>
+<!-- TopNavBar -->
+<header class="bg-surface/80 dark:bg-surface/80 backdrop-blur-xl border-b border-outline-variant/30 flex justify-between items-center h-16 px-gutter w-full fixed top-10 z-50">
+<div class="flex items-center gap-lg">
+<span class="font-headline-md text-headline-md font-bold tracking-tighter text-primary dark:text-primary">PREDICT</span>
+<nav class="hidden md:flex gap-md items-center">
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" href="#">Dashboard</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" href="#">Markets</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" href="#">Portfolio</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" href="#">Analysis</a>
+</nav>
+</div>
+<div class="flex items-center gap-sm">
+<button class="p-xs text-on-surface-variant hover:bg-primary/10 transition-all rounded">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+</button>
+<button class="p-xs text-on-surface-variant hover:bg-primary/10 transition-all rounded">
+<span class="material-symbols-outlined">notifications_active</span>
+</button>
+<button class="p-xs text-on-surface-variant hover:bg-primary/10 transition-all rounded">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="h-8 w-8 rounded-full overflow-hidden bg-surface-container-high border border-outline-variant">
+<img alt="User Analyst Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBT28pDJg-EJzobyOyzNFqYErXokG9XHVmM16wDS7SJcZadzBFxlfhqS2N1LsY3ZUT_a59fGU7Qr1zNeJLSNC1s1Yye5gCSrzlz5zN04itAzI596gq4nZi2zVDp7I6M9lN8JjsWFbA7e682XZjo0qtL0pRBiSK9quETr8YyyJZ-8AUx8uDSSGNwkiXEm09W5F83wE7XFeNBhSHq5X8P53hKf36J9_7EZvSHEu__V0EPPfzPCtcFOCN248xGqnnFP2W9444r0ubA2SY"/>
+</div>
+</div>
+</header>
+<main>
+<!-- Hero Section -->
+<section class="relative min-h-screen flex flex-col items-center justify-center pt-32 pb-xl px-margin overflow-hidden node-bg">
+<!-- Background Decorative Nodes (Canvas-like visualization) -->
+<div class="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+<div class="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px]"></div>
+<div class="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-secondary-fixed/5 rounded-full blur-[100px]"></div>
+</div>
+<div class="max-w-5xl w-full text-center relative z-10 space-y-md">
+<div class="inline-flex items-center gap-xs px-sm py-xs bg-primary-container/10 border border-primary/20 rounded-full">
+<span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">psychology</span>
+<span class="font-data-label text-data-label text-primary uppercase tracking-widest">Next-Gen Predictive Engine Live</span>
+</div>
+<h1 class="font-headline-lg text-6xl md:text-8xl text-on-surface font-extrabold tracking-tighter leading-[1.1]">
+                    Predict the <span class="text-primary italic">Pulse</span> of the Market
+                </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto leading-relaxed">
+                    Institutional-grade AI forecasting for the modern analyst. Process 40PB of daily data with sub-millisecond latency. Stay ahead of volatility with algorithmic precision.
+                </p>
+<div class="flex flex-col sm:flex-row gap-md justify-center pt-md">
+<button class="px-xl py-md bg-primary text-on-primary font-bold rounded-lg hover:shadow-[0px_8px_24px_rgba(105,137,255,0.15)] transition-all active:scale-95">
+                        Start Free Trial
+                    </button>
+<button class="px-xl py-md border border-primary text-primary font-bold rounded-lg hover:bg-primary/10 transition-all active:scale-95">
+                        View Demo
+                    </button>
+</div>
+</div>
+<!-- Floating Data Preview -->
+<div class="mt-xl w-full max-w-6xl relative z-10 glass-panel p-xs rounded-xl overflow-hidden shadow-2xl">
+<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50"></div>
+<img class="w-full h-auto rounded-lg" data-alt="A sophisticated dark-themed financial dashboard interface shown on a high-resolution display. The UI features sleek line charts with neon blue and green accents, data tables with micro-typography, and glowing status indicators. The overall lighting is low-key with subtle backlighting effects, creating a professional institutional-grade analytical environment. Information density is high but organized within a rigid grid system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0zx9u4oNmdvcySTh8YjkU67mnvo-O5GJsp5GKOQy83HXmdhEEB2Iz9wiA-S3FA9IXBORJfA4e2Ps2NE6NvDn_xPzvFWbITvawrqYjTfaQasQTZK17Z9wT9Ew79YradalSocP1J2bR2BN1hXUnmbJZbEWysfpuHmAS3QBcd76bzTneTlgatmJPMmsQPbKCsv-l_7JAC9RfsLZC2y9yHQ7Fe_BKNognbD0rClE64ZKANujN5Of2CCItJoL39PElh2nygHEs7OlHD2o"/>
+</div>
+</section>
+<!-- Why PREDICT Section -->
+<section class="py-xl px-margin max-w-7xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+<!-- Card 1 -->
+<div class="bg-surface-container-low border border-outline-variant/30 p-lg rounded-xl space-y-md group hover:border-primary/50 transition-colors">
+<div class="w-12 h-12 bg-primary/10 flex items-center justify-center rounded-lg">
+<span class="material-symbols-outlined text-primary text-3xl">verified</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">99.8% Precision</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Our models are trained on historical tick-data since 1972, providing unparalleled predictive accuracy for short-term and long-term positions.</p>
+<div class="pt-sm border-t border-outline-variant/20">
+<span class="font-data-label text-data-label text-secondary-fixed">INSTITUTIONAL GRADE</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-low border border-outline-variant/30 p-lg rounded-xl space-y-md group hover:border-primary/50 transition-colors">
+<div class="w-12 h-12 bg-primary/10 flex items-center justify-center rounded-lg">
+<span class="material-symbols-outlined text-primary text-3xl">speed</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Sub-ms Latency</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Execute and adjust strategy in real-time. Our proprietary edge-nodes process global exchange signals before they reach standard terminals.</p>
+<div class="pt-sm border-t border-outline-variant/20 flex items-center gap-xs">
+<span class="w-2 h-2 rounded-full bg-secondary-fixed animate-pulse"></span>
+<span class="font-data-label text-data-label text-secondary-fixed uppercase">Live Stream Connected</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-low border border-outline-variant/30 p-lg rounded-xl space-y-md group hover:border-primary/50 transition-colors">
+<div class="w-12 h-12 bg-primary/10 flex items-center justify-center rounded-lg">
+<span class="material-symbols-outlined text-primary text-3xl">neurology</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">LLM-Enhanced</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Beyond numbers, our AI parses sentiment from 50,000+ sources including earnings calls, filings, and dark-pool activities.</p>
+<div class="pt-sm border-t border-outline-variant/20">
+<span class="font-data-label text-data-label text-on-surface-variant uppercase">Transformer Model v4.2</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Dashboard Preview / Bento Grid -->
+<section class="py-xl px-margin bg-surface-container-lowest">
+<div class="max-w-7xl mx-auto space-y-lg">
+<div class="text-center space-y-sm">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">The Invisible Analyst</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl mx-auto">A command center designed for clarity. High information density without the noise.</p>
+</div>
+<div class="grid grid-cols-12 gap-md">
+<!-- Large Bento Item -->
+<div class="col-span-12 md:col-span-8 bg-surface-container-low border border-outline-variant/30 rounded-xl overflow-hidden flex flex-col h-[400px]">
+<div class="p-gutter border-b border-outline-variant/20 flex justify-between items-center">
+<span class="font-data-label text-data-label text-on-surface-variant uppercase">Volatility Clustering Analysis</span>
+<div class="flex gap-xs">
+<span class="px-xs py-[2px] bg-secondary-container/10 text-secondary-fixed text-[10px] border border-secondary-fixed/20 rounded">LIVE</span>
+</div>
+</div>
+<div class="flex-1 p-gutter bg-[url('https://images.unsplash.com/photo-1611974717535-7c446a3c60ad?auto=format&amp;fit=crop&amp;q=80&amp;w=1200')] bg-cover bg-center" data-alt="A detailed financial chart showing multiple overlapping line graphs in neon green and electric blue against a dark charcoal background. Micro-data labels and grid lines are barely visible, creating a high-tech technical analysis aesthetic. The composition is focused on the upward trajectory of the lines, suggesting positive growth and market momentum."></div>
+</div>
+<!-- Small Bento Item 1 -->
+<div class="col-span-12 md:col-span-4 bg-surface-container-low border border-outline-variant/30 rounded-xl p-gutter flex flex-col justify-between">
+<div>
+<span class="font-data-label text-data-label text-on-surface-variant uppercase">Risk Appetite</span>
+<div class="mt-md text-4xl font-headline-lg text-primary">High Conviction</div>
+</div>
+<div class="space-y-sm">
+<div class="h-2 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[85%]"></div>
+</div>
+<div class="flex justify-between font-data-label text-data-label text-on-surface-variant">
+<span>CONSERVATIVE</span>
+<span>AGGRESSIVE</span>
+</div>
+</div>
+</div>
+<!-- Small Bento Item 2 -->
+<div class="col-span-12 md:col-span-4 bg-surface-container-low border border-outline-variant/30 rounded-xl p-gutter">
+<span class="font-data-label text-data-label text-on-surface-variant uppercase mb-md block">Sentiment Flow</span>
+<div class="space-y-md">
+<div class="flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-on-surface">Social Narrative</span>
+<span class="text-secondary-fixed font-data-label">+42%</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-on-surface">Institutional Buy</span>
+<span class="text-secondary-fixed font-data-label">+12%</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-on-surface">Short Interest</span>
+<span class="text-tertiary-container font-data-label">-8%</span>
+</div>
+</div>
+</div>
+<!-- Medium Bento Item -->
+<div class="col-span-12 md:col-span-8 bg-surface-container-low border border-outline-variant/30 rounded-xl p-gutter flex items-center gap-lg">
+<div class="flex-1">
+<h4 class="font-headline-md text-headline-md text-on-surface mb-sm">AI Signal: Bullish Retest</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Predictive engine detects a structural retest of the 200-day EMA with high volume divergence. 84% probability of breakout within 72 hours.</p>
+</div>
+<div class="hidden sm:block w-32 h-32 rounded-full border-[8px] border-primary/20 border-t-primary flex items-center justify-center">
+<span class="font-headline-md text-primary">84%</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="py-xl px-margin relative overflow-hidden">
+<div class="absolute inset-0 bg-primary/5 -z-10"></div>
+<div class="max-w-4xl mx-auto glass-panel p-xl rounded-2xl text-center space-y-md border-primary/30">
+<h2 class="font-headline-lg text-4xl md:text-5xl text-on-surface font-bold">Ready to outpace the market?</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl mx-auto">Join over 1,400 hedge funds and independent analysts who leverage PREDICT to secure their alpha.</p>
+<div class="pt-md flex flex-col items-center gap-sm">
+<button class="w-full sm:w-auto px-xl py-md bg-primary text-on-primary font-bold rounded-lg hover:shadow-[0px_0px_30px_rgba(105,137,255,0.4)] transition-all">
+                        Start Your 14-Day Free Trial
+                    </button>
+<p class="font-data-label text-data-label text-on-surface-variant">NO CREDIT CARD REQUIRED. CANCEL ANYTIME.</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest border-t border-outline-variant/20 w-full py-lg flex flex-col items-center justify-center gap-sm px-margin text-center">
+<span class="font-data-display text-data-display text-primary">PREDICT AI</span>
+<div class="flex flex-wrap justify-center gap-md">
+<a class="font-data-label text-data-label text-on-surface-variant hover:text-secondary-fixed transition-colors uppercase tracking-widest" href="#">Privacy Policy</a>
+<a class="font-data-label text-data-label text-on-surface-variant hover:text-secondary-fixed transition-colors uppercase tracking-widest" href="#">Terms of Service</a>
+<a class="font-data-label text-data-label text-on-surface-variant hover:text-secondary-fixed transition-colors uppercase tracking-widest" href="#">SEC Disclosures</a>
+<a class="font-data-label text-data-label text-on-surface-variant hover:text-secondary-fixed transition-colors uppercase tracking-widest" href="#">Risk Warning</a>
+</div>
+<p class="font-data-label text-data-label text-on-surface-variant uppercase tracking-widest mt-sm">
+            © 2024 Predict AI Financial. Institutional-grade forecasting.
+        </p>
+</footer>
+<script>
+        // Micro-interactions for hover effects and animations
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('mousedown', () => {
+                button.style.transform = 'scale(0.95)';
+                button.style.opacity = '0.8';
+            });
+            button.addEventListener('mouseup', () => {
+                button.style.transform = 'scale(1)';
+                button.style.opacity = '1';
+            });
+            button.addEventListener('mouseleave', () => {
+                button.style.transform = 'scale(1)';
+                button.style.opacity = '1';
+            });
+        });
+
+        // Simple parallax effect for hero nodes
+        window.addEventListener('scroll', () => {
+            const scroll = window.pageYOffset;
+            const heroBg = document.querySelector('.node-bg');
+            if (heroBg) {
+                heroBg.style.backgroundPositionY = `${scroll * 0.5}px`;
+            }
+        });
+    </script>
+</body></html>

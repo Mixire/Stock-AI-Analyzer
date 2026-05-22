@@ -1,0 +1,17 @@
+fastapi
+uvicorn
+yfinance
+pandas
+pandas-ta
+scikit-learn
+anthropic
+shap
+reportlab
+sqlalchemy
+psycopg2-binary
+redis
+celery
+python-dotenv
+jinja2
+transformers
+torch
